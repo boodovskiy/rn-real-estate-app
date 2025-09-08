@@ -10,10 +10,7 @@ export const config = {
 
 export const client = new Client();
 
-client
-  .setEndpoint(config.endpoint!)
-  .setProject(config.projectId!)
-  .setPlatform(config.platform!);
+client.setEndpoint(config.endpoint!).setProject(config.projectId!);
 
 export const avatar = new Avatars(client);
 export const account = new Account(client);
@@ -21,14 +18,7 @@ export const account = new Account(client);
 export async function login() {
   try {
     //const redirectUri = Linking.createURL("/");
-    let redirectUri = AuthSession.makeRedirectUri({ preferLocalhost: true });
-
-    // Hack: Ensure localhost is in the URI for Appwrite OAuth validation on mobile
-    if (!redirectUri.includes("localhost")) {
-      const url = new URL(redirectUri);
-      url.hostname = "localhost";
-      redirectUri = url.toString();
-    }
+    let redirectUri = AuthSession.makeRedirectUri({ scheme: "restate" });
 
     const response = await account.createOAuth2Token(
       OAuthProvider.Google,
