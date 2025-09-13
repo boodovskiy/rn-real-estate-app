@@ -1,8 +1,10 @@
 import { settings } from "@/constants/data";
 import icons from "@/constants/icons";
-import images from "@/constants/images";
+import { logout } from "@/lib/appwrite";
+import { useGlobalContext } from "@/lib/global-provider";
 import React from "react";
 import {
+  Alert,
   Image,
   ImageSourcePropType,
   ScrollView,
@@ -43,7 +45,18 @@ const SettingsItem = ({
 );
 
 const Profile = () => {
-  const handleLogout = async () => {};
+  const { user, refetch } = useGlobalContext();
+
+  const handleLogout = async () => {
+    const result = await logout();
+
+    if (result) {
+      Alert.alert("Success", "You have been logout successfully");
+      refetch();
+    } else {
+      Alert.alert("Error", "An error occurred while logging out.");
+    }
+  };
 
   return (
     <SafeAreaView className="h-full bg-white">
@@ -59,13 +72,13 @@ const Profile = () => {
         <View className="flex-row justify-center flex mt-5">
           <View className="flex flex-col items-center relative mt-5">
             <Image
-              source={images.avatar}
+              source={{ uri: user?.avatar }}
               className="size-44 relative rounded-full"
             />
             <TouchableOpacity className="absolute bottom-11 right-2">
               <Image source={icons.edit} className="size-9" />
             </TouchableOpacity>
-            <Text className="text-2xl font-rubik-bold mt-2">Alex | SC</Text>
+            <Text className="text-2xl font-rubik-bold mt-2">{user?.name}</Text>
           </View>
         </View>
 
