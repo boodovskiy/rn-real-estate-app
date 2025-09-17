@@ -4,11 +4,12 @@ import Search from "@/components/Search";
 import icons from "@/constants/icons";
 import images from "@/constants/images";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Index() {
   return (
-    <SafeAreaView className="bg-white h-full">
+    <SafeAreaProvider className="bg-white h-full">
+      {/* <FlatList data={[1, 2, 3, 4]} renderItem={({ item }) => <Card />} /> */}
       <View className="px-5">
         <View className="flex flex-row items-center justify-between mt-5">
           <View className="flex flex-row">
@@ -60,6 +61,6 @@ export default function Index() {
           <Card />
         </View>
       </View>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
