@@ -4,9 +4,10 @@ import images from "@/constants/images";
 import { getPropertyById } from "@/lib/appwrite";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { router, useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Dimensions,
+  FlatList,
   Image,
   Platform,
   ScrollView,
@@ -24,6 +25,10 @@ const Property = () => {
     fn: getPropertyById,
     params: { id: id! },
   });
+
+  useEffect(() => {
+    console.log("Property object:", JSON.stringify(property, null, 2));
+  }, [property]);
 
   return (
     <View>
@@ -181,6 +186,28 @@ const Property = () => {
               </View>
             )}
           </View>
+
+          {property?.gallery?.length > 0 && (
+            <View className="mt-7">
+              <Text className="text-black-300 text-xl font-rubik-bold">
+                Gallery
+              </Text>
+              <FlatList
+                contentContainerStyle={{ paddingRight: 20 }}
+                data={property?.gallery}
+                keyExtractor={(item) => item.$id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => (
+                  <Image
+                    source={{ uri: item.image }}
+                    className="size-40 rounded-xl"
+                  />
+                )}
+                contentContainerClassName="flex gap-4 mt-3"
+              />
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
