@@ -153,7 +153,14 @@ export async function getPropertyById({ id }: { id: string }) {
       config.propertiesTableId!,
       id
     );
-    return result;
+
+    const galleryRows = await databases.listDocuments(
+      config.databaseId!,
+      config.galleriesTableId!,
+      [Query.equal("68cbb68d003b729a74ef", id)]
+    );
+
+    return { ...result, gallery: galleryRows.documents };
   } catch (error) {
     console.error(error);
     return null;
