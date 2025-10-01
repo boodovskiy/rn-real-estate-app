@@ -160,7 +160,12 @@ export async function getPropertyById({ id }: { id: string }) {
       [Query.equal("68cbb68d003b729a74ef", id)]
     );
 
-    return { ...result, gallery: galleryRows.documents };
+    return {
+      ...result,
+      gallery: galleryRows.documents ?? [],
+    } as typeof result & {
+      gallery: typeof galleryRows.documents;
+    };
   } catch (error) {
     console.error(error);
     return null;
