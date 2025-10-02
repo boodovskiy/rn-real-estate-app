@@ -1,3 +1,4 @@
+import Comment from "@/components/Comment";
 import { facilities } from "@/constants/data";
 import icons from "@/constants/icons";
 import images from "@/constants/images";
@@ -225,6 +226,29 @@ const Property = () => {
               className="h-52 w-full mt-5 rounded-xl"
             />
           </View>
+
+          {property?.reviews.length > 0 && (
+            <View className="mt-7">
+              <View className="flex flex-row items-center justify-between">
+                <View className="flex flex-row items-center">
+                  <Image source={icons.star} className="size-6" />
+                  <Text className="text-black-300 text-xl font-rubik-bold ml-2">
+                    {property?.rating} {property?.reviews.length} Reviews
+                  </Text>
+                </View>
+
+                <TouchableOpacity>
+                  <Text className="text-primary-300 text-base font-rubik-bold">
+                    View All
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View className="mt-5">
+                <Comment item={property?.reviews[0]} />
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
