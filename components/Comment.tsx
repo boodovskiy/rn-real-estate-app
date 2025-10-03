@@ -3,7 +3,11 @@ import { Image, Text, View } from "react-native";
 import { Models } from "react-native-appwrite";
 
 interface Props {
-  item: Models.Document;
+  item: Models.Document & {
+    avatar: string;
+    name: string;
+    review: string;
+  };
 }
 
 const Comment = ({ item }: Props) => {
