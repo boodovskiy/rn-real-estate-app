@@ -188,7 +188,7 @@ const Property = () => {
             )}
           </View>
 
-          {property?.gallery?.length > 0 && (
+          {property?.gallery && property.gallery.length > 0 && (
             <View className="mt-7">
               <Text className="text-black-300 text-xl font-rubik-bold">
                 Gallery
@@ -227,7 +227,7 @@ const Property = () => {
             />
           </View>
 
-          {property?.reviews.length > 0 && (
+          {property?.reviews && property?.reviews.length > 0 && (
             <View className="mt-7">
               <View className="flex flex-row items-center justify-between">
                 <View className="flex flex-row items-center">
