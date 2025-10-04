@@ -160,11 +160,19 @@ export async function getPropertyById({ id }: { id: string }) {
       [Query.equal("68cbb68d003b729a74ef", id)]
     );
 
+    const reviewRows = await databases.listDocuments(
+      config.databaseId!,
+      config.reviewsTableId!,
+      [Query.equal("property", id)]
+    );
+
     return {
       ...result,
       gallery: galleryRows.documents ?? [],
+      reviews: reviewRows.documents ?? [],
     } as typeof result & {
       gallery: typeof galleryRows.documents;
+      reviews: typeof reviewRows.documents;
     };
   } catch (error) {
     console.error(error);

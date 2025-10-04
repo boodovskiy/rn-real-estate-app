@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Models } from "react-native-appwrite";
 
 const Property = () => {
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -86,7 +87,7 @@ const Property = () => {
             <View className="flex flex-row items-center gap-2">
               <Image source={icons.star} className="size-5" />
               <Text className="text-black-200 text-sm mt-1 font-rubik-medium">
-                {property?.rating} ({property?.reviews} reviews)
+                {property?.rating} ({property?.reviews?.length} reviews)
               </Text>
             </View>
           </View>
@@ -245,7 +246,15 @@ const Property = () => {
               </View>
 
               <View className="mt-5">
-                <Comment item={property?.reviews[0]} />
+                <Comment
+                  item={
+                    property?.reviews[0] as unknown as Models.Document & {
+                      avatar: string;
+                      name: string;
+                      review: string;
+                    }
+                  }
+                />
               </View>
             </View>
           )}

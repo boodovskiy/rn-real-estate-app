@@ -2,12 +2,13 @@ import icons from "@/constants/icons";
 import { Image, Text, View } from "react-native";
 import { Models } from "react-native-appwrite";
 
+interface Review extends Models.Document {
+  avatar: string;
+  name: string;
+  review: string;
+}
 interface Props {
-  item: Models.Document & {
-    avatar: string;
-    name: string;
-    review: string;
-  };
+  item: Review;
 }
 
 const Comment = ({ item }: Props) => {
@@ -25,7 +26,7 @@ const Comment = ({ item }: Props) => {
       </Text>
 
       <View className="flex flex-row items-center w-full justify-between mt-4">
-        <View className="flex flex-row itmes-center">
+        <View className="flex flex-row items-center">
           <Image
             source={icons.heart}
             className="size-5"
