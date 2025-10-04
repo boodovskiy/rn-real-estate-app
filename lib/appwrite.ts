@@ -5,9 +5,23 @@ import {
   Avatars,
   Client,
   Databases,
+  Models,
   OAuthProvider,
   Query,
 } from "react-native-appwrite";
+import { Property } from "../components/Cards";
+import { Review } from "../components/Comment";
+
+// Define return type
+interface PropertyWithDetails extends Property {
+  gallery: GalleryItem[];
+  reviews: Review[];
+}
+
+interface GalleryItem extends Models.Document {
+  image: string;
+  property?: string; // Опционально, если есть связь с property
+}
 
 export const config = {
   platform: "com.sc.restate",
@@ -146,21 +160,25 @@ export async function getProperties({
   }
 }
 
-export async function getPropertyById({ id }: { id: string }) {
+export async function getPropertyById({
+  id,
+}: {
+  id: string;
+}): Promise<PropertyWithDetails | null> {
   try {
-    const result = await databases.getDocument(
+    const result = await databases.getDocument<Property>(
       config.databaseId!,
       config.propertiesTableId!,
       id
     );
 
-    const galleryRows = await databases.listDocuments(
+    const galleryRows = await databases.listDocuments<GalleryItem>(
       config.databaseId!,
       config.galleriesTableId!,
       [Query.equal("68cbb68d003b729a74ef", id)]
     );
 
-    const reviewRows = await databases.listDocuments(
+    const reviewRows = await databases.listDocuments<Review>(
       config.databaseId!,
       config.reviewsTableId!,
       [Query.equal("property", id)]
@@ -170,9 +188,6 @@ export async function getPropertyById({ id }: { id: string }) {
       ...result,
       gallery: galleryRows.documents ?? [],
       reviews: reviewRows.documents ?? [],
-    } as typeof result & {
-      gallery: typeof galleryRows.documents;
-      reviews: typeof reviewRows.documents;
     };
   } catch (error) {
     console.error(error);

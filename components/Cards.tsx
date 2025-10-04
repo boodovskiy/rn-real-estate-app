@@ -4,12 +4,23 @@ import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Models } from "react-native-appwrite";
 
-interface Property extends Models.Document {
+export interface Property extends Models.Document {
   image: string;
   name: string;
   address: string;
   price: number;
   rating: number;
+  type: string;
+  bedrooms: number;
+  bathrooms: number;
+  area: number;
+  agent: {
+    avatar: string;
+    name: string;
+    email: string;
+  };
+  description: string;
+  facilities: string[];
 }
 
 interface Props {

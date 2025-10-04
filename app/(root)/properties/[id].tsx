@@ -16,7 +16,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Models } from "react-native-appwrite";
 
 const Property = () => {
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -156,7 +155,7 @@ const Property = () => {
               Facilities
             </Text>
 
-            {property?.facilities.length > 0 && (
+            {property && property?.facilities.length > 0 && (
               <View className="flex flex-row  flex-wrap items-start justify-start mt-2 gap-5">
                 {property?.facilities.map((item: string, index: number) => {
                   const facility = facilities.find(
@@ -246,15 +245,7 @@ const Property = () => {
               </View>
 
               <View className="mt-5">
-                <Comment
-                  item={
-                    property?.reviews[0] as unknown as Models.Document & {
-                      avatar: string;
-                      name: string;
-                      review: string;
-                    }
-                  }
-                />
+                <Comment item={property.reviews[0]} />
               </View>
             </View>
           )}
