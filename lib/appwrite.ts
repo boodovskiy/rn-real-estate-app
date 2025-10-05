@@ -5,23 +5,11 @@ import {
   Avatars,
   Client,
   Databases,
-  Models,
   OAuthProvider,
   Query,
 } from "react-native-appwrite";
 import { Property } from "../components/Cards";
-import { Review } from "../components/Comment";
-
-// Define return type
-interface PropertyWithDetails extends Property {
-  gallery: GalleryItem[];
-  reviews: Review[];
-}
-
-interface GalleryItem extends Models.Document {
-  image: string;
-  property?: string; // Опционально, если есть связь с property
-}
+import { GalleryItem, PropertyWithDetails, Review } from "./types";
 
 export const config = {
   platform: "com.sc.restate",

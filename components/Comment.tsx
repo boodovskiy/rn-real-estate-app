@@ -1,14 +1,7 @@
 import icons from "@/constants/icons";
 import { Image, Text, View } from "react-native";
-import { Models } from "react-native-appwrite";
+import { Review } from "../lib/types";
 
-export interface Review extends Models.Document {
-  avatar: string;
-  name: string;
-  review: string;
-  rating?: number; // Optional for future use
-  property?: string; // Optional
-}
 interface Props {
   item: Review;
 }
